@@ -89,7 +89,7 @@ function AdminPage() {
   }, [leads, query, sourceFilter]);
 
   const exportCsv = () => {
-    const header = ["Date", "First name", "Last name", "Country", "Phone", "Email", "Goal", "Start", "Speed", "Source"];
+    const header = ["Date", "First name", "Last name", "Country", "Phone", "Email", "Main Goal", "Training Preference", "Commitment Level", "Source"];
     const rows = filtered.map((l) => [
       new Date(l.created_at).toISOString(),
       l.first_name ?? "",
@@ -187,9 +187,9 @@ function AdminPage() {
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Phone</th>
                 <th className="px-4 py-3">Email</th>
-                <th className="px-4 py-3">Goal</th>
-                <th className="px-4 py-3">Start</th>
-                <th className="px-4 py-3">Speed</th>
+                <th className="px-4 py-3">Main Goal</th>
+                <th className="px-4 py-3">Training Preference</th>
+                <th className="px-4 py-3">Commitment Level</th>
                 <th className="px-4 py-3">Source</th>
                 <th className="px-4 py-3"></th>
               </tr>
