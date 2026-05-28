@@ -132,13 +132,27 @@ function Hero() {
             <span className="text-foreground">{t.h1c}</span>
           </h1>
           <p className="mt-5 max-w-lg text-base text-muted-foreground sm:text-lg">{t.sub}</p>
+
+          {/* Mobile-only image: below heading, above form */}
+          <div className="relative mt-8 lg:hidden">
+            <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-brand-orange/30 via-brand-brown/30 to-transparent blur-3xl" />
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-brand-orange/10">
+              <img src={heroImg} alt="Hustle Nation training" width={1280} height={1280} className="h-full w-full object-cover aspect-square" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-transparent" />
+              <div className="pointer-events-none absolute bottom-5 left-5 right-5 flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/80">
+                <span className="h-px flex-1 bg-white/30" />
+                {t.tagline}
+              </div>
+            </div>
+          </div>
+
           <LeadForm />
         </div>
 
-        <div className="relative">
+        <div className="relative hidden lg:block">
           <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-brand-orange/30 via-brand-brown/30 to-transparent blur-3xl" />
           <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-brand-orange/10">
-            <img src={heroImg} alt="Hustle Nation training" width={1280} height={1280} className="h-full w-full object-cover aspect-square lg:aspect-auto lg:h-[640px]" />
+            <img src={heroImg} alt="Hustle Nation training" width={1280} height={1280} className="h-full w-full object-cover lg:h-[640px]" />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-transparent" />
             <div className="pointer-events-none absolute bottom-5 left-5 right-5 flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/80">
               <span className="h-px flex-1 bg-white/30" />
