@@ -164,6 +164,17 @@ const COUNTRY_DIAL: Record<string, string> = {
   MX: "+52", AR: "+54",
 };
 
+// Max digits (without country code) per country dial code
+const PHONE_MAX: Record<string, number> = {
+  "+20": 11,   // Egypt
+  "+966": 10,  // Saudi Arabia
+  "+971": 10,  // UAE
+  "+965": 8,   // Kuwait
+  "+974": 8,   // Qatar
+  "+973": 8,   // Bahrain
+  "+968": 8,   // Oman
+};
+
 function LeadForm() {
   const [form, setForm] = useState({
     fullName: "", country: "+971", phone: "", email: "",
