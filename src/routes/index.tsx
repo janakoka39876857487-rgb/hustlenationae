@@ -166,7 +166,7 @@ const COUNTRY_DIAL: Record<string, string> = {
 
 function LeadForm() {
   const [form, setForm] = useState({
-    firstName: "", lastName: "", country: "+971", phone: "", email: "",
+    fullName: "", country: "+971", phone: "", email: "",
     goal: "", start: "", speed: "",
   });
 
