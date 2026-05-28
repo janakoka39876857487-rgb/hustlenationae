@@ -151,11 +151,44 @@ function Hero() {
   );
 }
 
+// Map ISO country code -> dial code for the dropdown
+const COUNTRY_DIAL: Record<string, string> = {
+  AE: "+971", SA: "+966", EG: "+20", GB: "+44", US: "+1", KW: "+965", QA: "+974",
+  BH: "+973", OM: "+968", JO: "+962", LB: "+961", MA: "+212", DZ: "+213", TN: "+216",
+  IQ: "+964", SY: "+963", YE: "+967", LY: "+218", SD: "+249", PS: "+970", TR: "+90",
+  DE: "+49", FR: "+33", IT: "+39", ES: "+34", NL: "+31", BE: "+32", SE: "+46",
+  CH: "+41", AT: "+43", IE: "+353", PT: "+351", PL: "+48", RU: "+7", UA: "+380",
+  CA: "+1", AU: "+61", NZ: "+64", IN: "+91", PK: "+92", BD: "+880", LK: "+94",
+  CN: "+86", JP: "+81", KR: "+82", SG: "+65", MY: "+60", ID: "+62", PH: "+63",
+  TH: "+66", VN: "+84", ZA: "+27", NG: "+234", KE: "+254", ET: "+251", BR: "+55",
+  MX: "+52", AR: "+54",
+};
+
 function LeadForm() {
   const [form, setForm] = useState({
     firstName: "", lastName: "", country: "+971", phone: "", email: "",
     goal: "", start: "", speed: "",
   });
+
+  // Auto-detect country dial code from visitor IP location
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        if (!res.ok) return;
+        const data = await res.json();
+        const dial = COUNTRY_DIAL[(data?.country_code || "").toUpperCase()];
+        if (dial && !cancelled) {
+          setForm(f => ({ ...f, country: dial }));
+        }
+      } catch {
+        /* ignore — keep default */
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm({ ...form, [k]: e.target.value });
