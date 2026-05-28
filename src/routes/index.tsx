@@ -63,7 +63,7 @@ const t = {
     { tag: "Built in-house", big: "OUR OWN FITNESS TECH", text: "we track, guide, and optimize every step of your journey." },
   ],
   tagline: "No shortcuts. Just hustle.",
-  toastErr: "Please fill in your name, phone, and email.",
+  toastErr: "Please fill in your name and phone number.",
   waMsg: (n: string) => `Hi Hustle Nation! I'm ${n || "interested"} and I'd like to start training.`,
 };
 
