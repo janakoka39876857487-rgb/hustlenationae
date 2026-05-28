@@ -212,17 +212,22 @@ function AdminPage() {
                     <td className="px-4 py-3">{l.speed || "—"}</td>
                     <td className="px-4 py-3 text-xs text-muted-foreground">{l.source}</td>
                     <td className="px-4 py-3">
-                      {cleaned && (
-                        <a
-                          href={`https://wa.me/${cleaned}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary-hover"
-                          aria-label="Open WhatsApp"
-                        >
-                          <MessageCircle className="h-4 w-4" />
-                        </a>
-                      )}
+                      {cleaned && (() => {
+                        const name = (l.first_name || "").trim();
+                        const hi = name ? `Hi ${name},` : "Hi,";
+                        const msg = `${hi} this is Hustle Nation. I tried to reach you but your details didn't come through on WhatsApp. Are you still interested in starting your fitness journey with us? If yes, when would you like to begin?`;
+                        return (
+                          <a
+                            href={`https://wa.me/${cleaned}?text=${encodeURIComponent(msg)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary-hover"
+                            aria-label="Send WhatsApp follow-up"
+                          >
+                            <MessageCircle className="h-4 w-4" />
+                          </a>
+                        );
+                      })()}
                     </td>
                   </tr>
                 );
