@@ -3,8 +3,12 @@ import { useState } from "react";
 import { toast, Toaster } from "sonner";
 import {
   ChevronDown, Dumbbell, Flame, Star, Zap,
-  Home as HomeIcon, Mail, MessageCircle, Instagram, Facebook, Twitter,
+  Home as HomeIcon, Mail, MessageCircle, Instagram, Linkedin, Twitter,
 } from "lucide-react";
+
+const SOCIAL_INSTAGRAM = "https://www.instagram.com/hustlenation.ae/";
+const SOCIAL_LINKEDIN = "https://www.linkedin.com/in/elhussein-ibrahim-094116236";
+const SOCIAL_X = "https://x.com/hustlenation_ae";
 
 import logo from "@/assets/hustle-nation-logo.jpg";
 import heroImg from "@/assets/hero-training.jpg";
