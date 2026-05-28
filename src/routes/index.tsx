@@ -234,26 +234,46 @@ function LeadForm() {
   const optStyle = { backgroundColor: "#3a3a3a", color: "#ffffff" } as const;
   const placeholderOptStyle = { backgroundColor: "#1f1f1f", color: "#9ca3af" } as const;
 
+  // Stable per-mount random suffix so browsers don't recognize fields across visits
+  const [nonce] = useState(() => Math.random().toString(36).slice(2, 10));
+  // Disable autofill aggressively: unknown autoComplete token + randomized name + readOnly-until-focus trick
+  const noFill = {
+    autoComplete: "new-password",
+    autoCorrect: "off" as const,
+    autoCapitalize: "off" as const,
+    spellCheck: false,
+    "data-form-type": "other",
+    "data-lpignore": "true",
+    "data-1p-ignore": "true",
+    readOnly: true,
+    onFocus: (e: React.FocusEvent<HTMLInputElement>) => e.currentTarget.removeAttribute("readonly"),
+  };
+
   return (
-    <form onSubmit={onSubmit} className="mt-8 space-y-3" autoComplete="off">
-      {/* Honeypot to discourage browser autofill heuristics */}
-      <input type="text" name="prevent_autofill" autoComplete="off" tabIndex={-1} aria-hidden="true" className="hidden" />
+    <form onSubmit={onSubmit} className="mt-8 space-y-3" autoComplete="off" data-form-type="other">
+      {/* Honeypot fields to absorb browser autofill */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "-9999px", height: 0, width: 0, overflow: "hidden" }}>
+        <input type="text" tabIndex={-1} autoComplete="username" name="username" />
+        <input type="password" tabIndex={-1} autoComplete="current-password" name="password" />
+        <input type="email" tabIndex={-1} autoComplete="email" name="email" />
+        <input type="tel" tabIndex={-1} autoComplete="tel" name="tel" />
+      </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <input className={inputCls} placeholder={t.firstName} value={form.firstName} onChange={set("firstName")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-first-name" />
-        <input className={inputCls} placeholder={t.lastName} value={form.lastName} onChange={set("lastName")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-last-name" />
+        <input className={inputCls} placeholder={t.firstName} value={form.firstName} onChange={set("firstName")} {...noFill} name={`fn_${nonce}`} />
+        <input className={inputCls} placeholder={t.lastName} value={form.lastName} onChange={set("lastName")} {...noFill} name={`ln_${nonce}`} />
       </div>
 
       <div className="grid grid-cols-[110px_1fr] gap-3 sm:grid-cols-[110px_1fr_1fr]">
         <div className="relative">
-          <select className={selectCls} value={form.country} onChange={set("country")} autoComplete="off" name="hn-country">
+          <select className={selectCls} value={form.country} onChange={set("country")} autoComplete="new-password" name={`cc_${nonce}`} data-form-type="other" data-lpignore="true">
             {Array.from(new Set([form.country, ...Object.values(COUNTRY_DIAL)])).map(c => (
               <option key={c} value={c} style={optStyle}>{c}</option>
             ))}
           </select>
           <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
         </div>
-        <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={set("phone")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-phone" inputMode="tel" />
-        <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={t.email} type="email" value={form.email} onChange={set("email")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-email" />
+        <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={set("phone")} {...noFill} name={`ph_${nonce}`} inputMode="tel" type="text" />
+        <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={t.email} type="text" value={form.email} onChange={set("email")} {...noFill} name={`em_${nonce}`} inputMode="email" />
       </div>
 
 
