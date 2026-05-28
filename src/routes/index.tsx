@@ -235,24 +235,27 @@ function LeadForm() {
   const placeholderOptStyle = { backgroundColor: "#1f1f1f", color: "#9ca3af" } as const;
 
   return (
-    <form onSubmit={onSubmit} className="mt-8 space-y-3">
+    <form onSubmit={onSubmit} className="mt-8 space-y-3" autoComplete="off">
+      {/* Honeypot to discourage browser autofill heuristics */}
+      <input type="text" name="prevent_autofill" autoComplete="off" tabIndex={-1} aria-hidden="true" className="hidden" />
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <input className={inputCls} placeholder={t.firstName} value={form.firstName} onChange={set("firstName")} />
-        <input className={inputCls} placeholder={t.lastName} value={form.lastName} onChange={set("lastName")} />
+        <input className={inputCls} placeholder={t.firstName} value={form.firstName} onChange={set("firstName")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-first-name" />
+        <input className={inputCls} placeholder={t.lastName} value={form.lastName} onChange={set("lastName")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-last-name" />
       </div>
 
       <div className="grid grid-cols-[110px_1fr] gap-3 sm:grid-cols-[110px_1fr_1fr]">
         <div className="relative">
-          <select className={selectCls} value={form.country} onChange={set("country")}>
-            {["+971","+966","+20","+44","+1"].map(c => (
+          <select className={selectCls} value={form.country} onChange={set("country")} autoComplete="off" name="hn-country">
+            {Array.from(new Set([form.country, ...Object.values(COUNTRY_DIAL)])).map(c => (
               <option key={c} value={c} style={optStyle}>{c}</option>
             ))}
           </select>
           <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
         </div>
-        <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={set("phone")} />
-        <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={t.email} type="email" value={form.email} onChange={set("email")} />
+        <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={set("phone")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-phone" inputMode="tel" />
+        <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={t.email} type="email" value={form.email} onChange={set("email")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-email" />
       </div>
+
 
       {[
         { k: "goal" as const, label: t.goal, options: t.goals },
