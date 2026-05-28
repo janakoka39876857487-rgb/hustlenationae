@@ -72,13 +72,34 @@
     border-color: var(--color-border);
   }
   html, body {
-    background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+  }
+  body {
+    background-color: #0d0d0d;
+    background-image:
+      radial-gradient(at 18% 12%, oklch(0.32 0.14 42 / 0.45) 0px, transparent 55%),
+      radial-gradient(at 82% 8%, oklch(0.28 0.10 30 / 0.40) 0px, transparent 55%),
+      radial-gradient(at 50% 95%, oklch(0.30 0.12 38 / 0.40) 0px, transparent 60%),
+      radial-gradient(at 90% 60%, oklch(0.22 0.08 28 / 0.50) 0px, transparent 55%);
+    background-size: 200% 200%;
+    background-attachment: fixed;
+    animation: bgShift 22s ease-in-out infinite alternate;
   }
   h1, h2, h3, .font-display {
     font-family: var(--font-display);
     letter-spacing: 0.01em;
   }
 }
+
+@keyframes bgShift {
+  0%   { background-position: 0% 0%, 100% 0%, 50% 100%, 100% 50%; }
+  50%  { background-position: 10% 20%, 80% 15%, 55% 85%, 85% 60%; }
+  100% { background-position: 20% 10%, 90% 25%, 45% 90%, 95% 45%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+}
+

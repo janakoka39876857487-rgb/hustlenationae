@@ -87,7 +87,7 @@ function openWhatsApp(msg: string, extra?: Record<string, unknown>) {
 
 function StartNowPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen text-foreground">
       <Toaster theme="dark" position="top-center" richColors />
       <Header />
       <Hero />
@@ -101,7 +101,7 @@ function StartNowPage() {
 
 function Header() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-background/60 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-10">
         <a href={HOME_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
           <img src={logo} alt="Hustle Nation" width={48} height={48} className="h-12 w-12 rounded-md object-cover" />
@@ -109,18 +109,11 @@ function Header() {
             HUSTLE<span className="text-primary">NATION</span>
           </span>
         </a>
-        <a
-          href={HOME_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-1.5 text-sm text-muted-foreground transition hover:border-primary hover:text-primary"
-        >
-          <HomeIcon className="h-4 w-4" /> Home
-        </a>
       </div>
     </header>
   );
 }
+
 
 function Hero() {
   return (
@@ -302,7 +295,7 @@ function Trusted() {
 function Footer() {
   const socialBtn = "inline-flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground transition hover:bg-primary-hover";
   return (
-    <footer className="border-t border-white/5 bg-background">
+    <footer className="border-t border-white/5">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-5 py-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr] lg:gap-12 lg:px-10">
         {/* Brand */}
         <div className="flex flex-col items-center text-center sm:col-span-2 lg:col-span-1 lg:items-start lg:text-left">
