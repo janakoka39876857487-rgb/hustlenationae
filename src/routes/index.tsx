@@ -272,7 +272,7 @@ function LeadForm() {
           <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
         </div>
         <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={set("phone")} {...noFill} name={`ph_${nonce}`} inputMode="tel" type="text" />
-        <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={t.email} type="text" value={form.email} onChange={set("email")} {...noFill} name={`em_${nonce}`} inputMode="email" />
+        <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={`${t.email} (optional)`} type="text" value={form.email} onChange={set("email")} {...noFill} name={`em_${nonce}`} inputMode="email" />
       </div>
 
 
