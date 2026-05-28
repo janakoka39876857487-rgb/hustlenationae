@@ -164,6 +164,17 @@ const COUNTRY_DIAL: Record<string, string> = {
   MX: "+52", AR: "+54",
 };
 
+// Max digits (without country code) per country dial code
+const PHONE_MAX: Record<string, number> = {
+  "+20": 11,   // Egypt
+  "+966": 10,  // Saudi Arabia
+  "+971": 10,  // UAE
+  "+965": 8,   // Kuwait
+  "+974": 8,   // Qatar
+  "+973": 8,   // Bahrain
+  "+968": 8,   // Oman
+};
+
 function LeadForm() {
   const [form, setForm] = useState({
     fullName: "", country: "+971", phone: "", email: "",
@@ -271,7 +282,11 @@ function LeadForm() {
           </select>
           <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
         </div>
-        <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={set("phone")} {...noFill} name={`ph_${nonce}`} inputMode="tel" type="text" />
+        <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={(e) => {
+          const max = PHONE_MAX[form.country] ?? 15;
+          const digits = e.target.value.replace(/\D/g, "").slice(0, max);
+          setForm({ ...form, phone: digits });
+        }} {...noFill} name={`ph_${nonce}`} inputMode="numeric" type="text" maxLength={PHONE_MAX[form.country] ?? 15} pattern="[0-9]*" />
         <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={`${t.email} (optional)`} type="text" value={form.email} onChange={set("email")} {...noFill} name={`em_${nonce}`} inputMode="email" />
       </div>
 
