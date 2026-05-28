@@ -359,7 +359,7 @@ function Lifestyle() {
       <p className="mt-2 font-display text-4xl text-foreground sm:text-5xl">{t.lifeQ}</p>
       <button
         type="button"
-        onClick={() => openWhatsApp(t.waMsg(""), { source: "lifestyle_cta" })}
+        onClick={() => document.getElementById("lead-form")?.scrollIntoView({ behavior: "smooth", block: "start" })}
         className="mt-8 inline-flex h-12 items-center gap-2 rounded-md bg-primary px-8 font-display text-lg tracking-wide text-primary-foreground transition hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/30"
       >
         {t.lifeCta}
