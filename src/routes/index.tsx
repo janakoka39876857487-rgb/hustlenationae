@@ -30,7 +30,7 @@ type Lang = "en" | "ar";
 
 const T = {
   en: {
-    dir: "ltr" as const,
+    dir: "ltr" as "ltr" | "rtl",
     langBtn: "العربية",
     h1a: "Train that ", h1b: "hits hard", h1c: " and lasts.",
     sub: "Whether you want to get stronger, build endurance, or just move with intent — Hustle Nation has you covered.",
@@ -63,7 +63,7 @@ const T = {
     waMsg: (n: string) => `Hi Hustle Nation! I'm ${n || "interested"} and I'd like to start training.`,
   },
   ar: {
-    dir: "rtl" as const,
+    dir: "rtl" as "ltr" | "rtl",
     langBtn: "EN",
     h1a: "تدريب ", h1b: "يضرب بقوة", h1c: " ويدوم طويلاً.",
     sub: "سواء كنت تريد أن تصبح أقوى، أو تبني قدرتك على التحمل، أو ببساطة تتحرك بهدف — هاسل نيشن معك في كل خطوة.",
