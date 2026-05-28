@@ -49,7 +49,7 @@ const t = {
   cta: "Start Now It's on us!",
   catEnd: "ENDURANCE", catStr: "STRENGTH", catMind: "MINDSET",
   catEndCopy: "It's not about quick fixes. It's about building habits that keep you moving, energized, and ready for years to come.",
-  catStrCopy: "Build strength step by step. No pressure, no intimidation just workouts that grow with you.",
+  catStrCopy: "Build strength step by step. No pressure, no intimidation, just workouts that grow with you.",
   catMindCopy: "Who said fitness has to be boring? With workouts that feel more like play, you'll actually look forward to it.",
   lifeKicker: "This is more than a workout. It's a lifestyle.",
   lifeQ: "Are you ready?",
