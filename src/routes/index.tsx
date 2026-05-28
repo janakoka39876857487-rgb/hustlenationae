@@ -120,7 +120,7 @@ function StartNowPage() {
   );
 }
 
-function Header({ t, onToggleLang }: { t: typeof T["en"]; onToggleLang: () => void }) {
+function Header({ t, onToggleLang }: { t: typeof T["en"] | typeof T["ar"]; onToggleLang: () => void }) {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-10">
@@ -141,7 +141,7 @@ function Header({ t, onToggleLang }: { t: typeof T["en"]; onToggleLang: () => vo
   );
 }
 
-function Hero({ t }: { t: typeof T["en"] }) {
+function Hero({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-5 py-12 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-20">
@@ -170,7 +170,7 @@ function Hero({ t }: { t: typeof T["en"] }) {
   );
 }
 
-function LeadForm({ t }: { t: typeof T["en"] }) {
+function LeadForm({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
   const [form, setForm] = useState({
     firstName: "", lastName: "", country: "+971", phone: "", email: "",
     goal: "", start: "", speed: "",
@@ -246,7 +246,7 @@ function LeadForm({ t }: { t: typeof T["en"] }) {
   );
 }
 
-function Categories({ t }: { t: typeof T["en"] }) {
+function Categories({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
   const cats = [
     { label: t.catEnd, img: catEndurance, copy: t.catEndCopy },
     { label: t.catStr, img: catStrength, copy: t.catStrCopy },
@@ -270,7 +270,7 @@ function Categories({ t }: { t: typeof T["en"] }) {
   );
 }
 
-function Lifestyle({ t }: { t: typeof T["en"] }) {
+function Lifestyle({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
   return (
     <section className="relative overflow-hidden border-y border-white/5 bg-gradient-to-b from-background via-brand-brown/15 to-background py-20 text-center">
       <p className="font-display text-2xl text-primary tracking-wider">{t.lifeKicker}</p>
@@ -288,7 +288,7 @@ function Lifestyle({ t }: { t: typeof T["en"] }) {
   );
 }
 
-function Trusted({ t }: { t: typeof T["en"] }) {
+function Trusted({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
   const icons = [Flame, Dumbbell, Star, Zap];
   return (
     <section className="mx-auto max-w-7xl px-5 py-20 text-center lg:px-10">
