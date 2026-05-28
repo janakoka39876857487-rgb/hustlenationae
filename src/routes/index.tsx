@@ -6,6 +6,7 @@ import {
   Home as HomeIcon, Mail, MessageCircle, Instagram, Linkedin, Twitter,
   FileText, ShieldCheck,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const SOCIAL_INSTAGRAM = "https://www.instagram.com/hustlenation.ae/";
 const SOCIAL_LINKEDIN = "https://www.linkedin.com/in/elhussein-ibrahim-094116236";
