@@ -155,7 +155,7 @@ function LeadForm() {
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm({ ...form, [k]: e.target.value });
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.firstName || !form.phone || !form.email) {
       toast.error(t.toastErr);
@@ -169,6 +169,24 @@ function LeadForm() {
       form.start && `${t.start} ${form.start}`,
       form.speed && `${t.speed} ${form.speed}`,
     ].filter(Boolean).join("\n");
+
+    // Save lead to dashboard before redirecting to WhatsApp (don't block on errors)
+    try {
+      await supabase.from("leads").insert({
+        first_name: form.firstName,
+        last_name: form.lastName || null,
+        country_code: form.country,
+        phone: form.phone,
+        email: form.email,
+        goal: form.goal || null,
+        start_time: form.start || null,
+        speed: form.speed || null,
+        source: "lead_form",
+      });
+    } catch (err) {
+      console.error("Lead save failed", err);
+    }
+
     openWhatsApp(lines, { source: "lead_form", goal: form.goal });
   };
 
