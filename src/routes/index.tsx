@@ -58,7 +58,7 @@ const t = {
   trustedSub: "Starting out is hard enough, that's why we keep every session personal, supportive, and built to help you feel confident.",
   stats: [
     { tag: "since 2017", big: "8+ YEARS", text: "helping people train smarter, safer, and stronger." },
-    { tag: "Proven impact", big: "1000+ SUCCESS STORIES", text: "across the Emirates and counting." },
+    { tag: "Proven impact", big: "1000+ SUCCESS STORIES", text: "across the Emirates, and counting." },
     { tag: "Top-rated", big: "4.9/5 RATING", text: "from clients who trust our coaching team." },
     { tag: "Built in-house", big: "OUR OWN FITNESS TECH", text: "we track, guide, and optimize every step of your journey." },
   ],
