@@ -258,9 +258,8 @@ function LeadForm() {
         <input type="email" tabIndex={-1} autoComplete="email" name="email" />
         <input type="tel" tabIndex={-1} autoComplete="tel" name="tel" />
       </div>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <input className={inputCls} placeholder={t.firstName} value={form.firstName} onChange={set("firstName")} {...noFill} name={`fn_${nonce}`} />
-        <input className={inputCls} placeholder={t.lastName} value={form.lastName} onChange={set("lastName")} {...noFill} name={`ln_${nonce}`} />
+      <div className="grid grid-cols-1 gap-3">
+        <input className={inputCls} placeholder={t.fullName} value={form.fullName} onChange={set("fullName")} {...noFill} name={`fn_${nonce}`} />
       </div>
 
       <div className="grid grid-cols-[110px_1fr] gap-3 sm:grid-cols-[110px_1fr_1fr]">
