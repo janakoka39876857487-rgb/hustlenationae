@@ -4,6 +4,7 @@ import { toast, Toaster } from "sonner";
 import {
   ChevronDown, Dumbbell, Flame, Star, Zap,
   Home as HomeIcon, Mail, MessageCircle, Instagram, Linkedin, Twitter,
+  FileText, ShieldCheck,
 } from "lucide-react";
 
 const SOCIAL_INSTAGRAM = "https://www.instagram.com/hustlenation.ae/";
@@ -338,9 +339,23 @@ function Footer() {
         {/* Quick Links */}
         <div>
           <h3 className="font-display text-2xl tracking-wide text-foreground">Quick Links</h3>
-          <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-            <li><a href={`${HOME_URL}/terms`} target="_blank" rel="noopener noreferrer" className="transition hover:text-primary">Terms of use</a></li>
-            <li><a href={`${HOME_URL}/privacy`} target="_blank" rel="noopener noreferrer" className="transition hover:text-primary">Privacy policy</a></li>
+          <ul className="mt-4 space-y-2 text-sm">
+            <li>
+              <a href={`${HOME_URL}/terms`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground transition hover:text-primary">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+                  <FileText className="h-4 w-4" />
+                </span>
+                Terms of use
+              </a>
+            </li>
+            <li>
+              <a href={`${HOME_URL}/privacy`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground transition hover:text-primary">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+                  <ShieldCheck className="h-4 w-4" />
+                </span>
+                Privacy policy
+              </a>
+            </li>
           </ul>
         </div>
       </div>
