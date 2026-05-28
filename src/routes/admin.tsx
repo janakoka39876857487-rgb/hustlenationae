@@ -89,6 +89,11 @@ function AdminPage() {
   }, [leads, query, sourceFilter]);
 
   const exportCsv = () => {
+    const sanitize = (v: unknown) => {
+      const s = String(v ?? "");
+      // Prevent CSV formula injection in spreadsheet apps
+      return /^[=+\-@\t\r]/.test(s) ? `'${s}` : s;
+    };
     const header = ["Date", "First name", "Last name", "Country", "Phone", "Email", "Main Goal", "Training Preference", "Commitment Level", "Source"];
     const rows = filtered.map((l) => [
       new Date(l.created_at).toISOString(),
