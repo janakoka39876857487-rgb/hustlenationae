@@ -1,40 +1,39 @@
-## Hustle Nation — Start Now landing page
 
-Recreate the structure of enhancefitness.com/en/start-now, rebranded with the Hustle Nation logo and the provided orange/charcoal/black palette.
+## الهدف
+أي شخص يضغط "Start Now" أو أي زر واتساب، بياناته تتخزن أوتوماتيك في قاعدة البيانات قبل ما يتحول لواتساب، وتبقى متاحة في داشبورد أدمن محمي بتسجيل دخول.
 
-### Design tokens (src/styles.css)
-- Background: `#0D0D0D` (near-black)
-- Surface/Card: `#1a1a1a` with subtle borders
-- Primary (CTA / accents): `#F26E22` orange, hover `#F25D27`
-- Secondary text / muted: `#666873` gray
-- Deep accent: `#732F16` (brown) for gradients/shadows
-- Foreground: white / off-white
-- Bold sans typography (Bebas Neue display + Inter body) to match the aggressive "Hustle" vibe
+## الخطوات
 
-### Assets
-- Copy `user-uploads://476477014_1578278566188423_8441828356647757311_n.jpg` → `src/assets/hustle-nation-logo.jpg`
-- Generate a hero gym/training image for the right-side panel
-- Generate 3 category images (Longevity / Strength / Fun → renamed for Hustle Nation: **Endurance**, **Strength**, **Mindset**)
+### 1. قاعدة البيانات (Lovable Cloud)
+- إنشاء جدول `leads` يحتوي على: `id`, `first_name`, `last_name`, `country_code`, `phone`, `email`, `goal`, `start_time`, `speed`, `source` (lead_form / lifestyle_cta / footer_whatsapp), `created_at`
+- تفعيل RLS:
+  - `INSERT` مسموح لأي شخص (anon + authenticated) عشان النموذج يشتغل من غير تسجيل دخول
+  - `SELECT` مسموح فقط لمستخدم عنده دور `admin`
+- جدول منفصل `user_roles` + enum `app_role` + دالة `has_role` (الطريقة الآمنة لمنع privilege escalation)
 
-### Page structure (`src/routes/start-now.tsx` + update `src/routes/index.tsx` to render it, or put on index directly)
-1. **Top bar** — Hustle Nation logo left, language pill right (matches reference)
-2. **Hero split (2 columns)**
-   - Left: headline "Train that **hits hard** and lasts." + sub copy
-   - Multi-step lead form: First name, Last name, phone (+country), email, Your Goal (select), When would you like to start (select), How quickly do you want results (select), CTA button "Start Now — It's on us!"
-   - Right: hero training image
-3. **3 category cards** with image + label overlay (Endurance / Strength / Mindset) with short description
-4. **"This is more than a workout. It's a lifestyle. Are you ready?"** + CTA "Own Your Strength"
-5. **Trusted by community** section with 4 stat cards (years, success stories, rating, technology)
-6. **Footer** — logo, nav links (Home, About Us, Careers, Privacy, Terms, Payment, Cookie), app store badges placeholders, social icons
+### 2. حفظ الليد قبل الواتساب
+- تعديل `LeadForm.onSubmit` و `openWhatsApp` بحيث:
+  1. يحفظ الليد في `leads` عبر Supabase client
+  2. بعدها يفتح واتساب (حتى لو الحفظ فشل، الواتساب يفتح عادي وميتعطلش المستخدم)
+- لأزرار "Own Your Strength" و "WhatsApp في الفوتر" اللي مفيش فيها نموذج: يتخزن سطر بـ `source` بس من غير بيانات عميل (أو ممكن نتجاهلهم — انت تختار، الافتراضي: نسجلهم كـ tap events بدون PII)
 
-### Technical
-- Single route file with form using local state (no backend) — submission shows a toast
-- Use shadcn `Input`, `Select`, `Button`, `Card`, `sonner` for toast
-- Update `__root.tsx` head meta: title "Start Now — Hustle Nation", description
-- Add per-route `head()` with title/description/og tags
-- Replace placeholder index with this landing page content
+### 3. تسجيل دخول الأدمن
+- صفحة `/auth` فيها تسجيل دخول بالإيميل/باسورد (Supabase Auth)
+- بعد التسجيل، أول مستخدم لازم يتعطى دور `admin` يدويًا من Lovable Cloud (تعليمات هتظهرلك)
+- إعداد session listener عشان يفضل مسجل دخول
 
-### Out of scope
-- No backend submission / database
-- No auth
-- No real app store links (placeholder buttons)
+### 4. داشبورد الأدمن `/admin`
+- محمية: لو مش مسجل دخول → redirect لـ `/auth`. لو مسجل بس مش admin → رسالة "Access denied"
+- جدول بيعرض كل الليدز: التاريخ، الاسم، التليفون، الإيميل، الهدف، التوقيت، السرعة، المصدر
+- بحث + فلترة بالتاريخ والمصدر
+- زر **Export CSV** يصدر كل الليدز (أو الفلترة الحالية)
+- زر **WhatsApp** جنب كل ليد يفتح محادثة معاه مباشرة
+
+### 5. الحفاظ على باقي الموقع
+- مفيش أي تغيير في الديزاين أو الكلام
+- الزرار وتجربة المستخدم تفضل زي ما هي بالظبط
+
+## ملاحظات تقنية
+- استخدام `@/integrations/supabase/client` المُولّد تلقائيا من Lovable Cloud
+- الـ INSERT بيتم client-side لأن الـ RLS هتسمح بـ insert فقط (مش read) للعموم
+- صفحات `/auth` و `/admin` كملفات routes جديدة في `src/routes/`
