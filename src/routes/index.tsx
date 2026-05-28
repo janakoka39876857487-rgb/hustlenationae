@@ -13,7 +13,7 @@ const SOCIAL_LINKEDIN = "https://www.linkedin.com/in/elhussein-ibrahim-094116236
 const SOCIAL_X = "https://x.com/hustlenation_ae";
 
 import logo from "@/assets/hustle-nation-logo.jpg";
-import heroImg from "@/assets/hero-training.jpg";
+import heroImg from "/hero-training.webp";
 import catEndurance from "@/assets/cat-endurance.jpg";
 import catStrength from "@/assets/cat-strength.jpg";
 import catMindset from "@/assets/cat-mindset.jpg";
