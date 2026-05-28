@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast, Toaster } from "sonner";
-import { ChevronDown, Dumbbell, Flame, Star, Zap } from "lucide-react";
+import {
+  ChevronDown, Dumbbell, Flame, Star, Zap,
+  Home as HomeIcon, Mail, MessageCircle, Instagram, Facebook, Twitter,
+} from "lucide-react";
 
 import logo from "@/assets/hustle-nation-logo.jpg";
 import heroImg from "@/assets/hero-training.jpg";
@@ -10,6 +13,7 @@ import catStrength from "@/assets/cat-strength.jpg";
 import catMindset from "@/assets/cat-mindset.jpg";
 
 const WHATSAPP = "971508152780";
+const CONTACT_EMAIL = "contact@hustlenationae.com";
 const HOME_URL = "https://www.hustlenationae.com";
 
 export const Route = createFileRoute("/")({
@@ -21,127 +25,100 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Train that hits hard and lasts. Join Hustle Nation." },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
   }),
   component: StartNowPage,
 });
 
-type Lang = "en" | "ar";
-
-const T = {
-  en: {
-    dir: "ltr" as "ltr" | "rtl",
-    langBtn: "العربية",
-    h1a: "Train that ", h1b: "hits hard", h1c: " and lasts.",
-    sub: "Whether you want to get stronger, build endurance, or just move with intent — Hustle Nation has you covered.",
-    firstName: "First name", lastName: "Last name",
-    phone: "Phone number", email: "Email",
-    goal: "Your Goal",
-    goals: ["Weight Loss","Bodybuilding","Tone","Strength","Injury Rehab","General Health","Yoga","Boxing","MMA","Krav Maga","Prenatal","Postnatal","Pilates","Kids PT","Body Conditioning"],
-    start: "When would you like to start?",
-    starts: ["This Week","Next Week","Not Sure Yet"],
-    speed: "How quickly do you want results?",
-    speeds: ["As fast as possible (8–12 weeks)","Steady and sustainable","No rush"],
-    cta: "Start Now — It's on us!",
-    catEnd: "ENDURANCE", catStr: "STRENGTH", catMind: "MINDSET",
-    catEndCopy: "It's not about quick fixes. It's about building habits that keep you moving, energized, and ready for years to come.",
-    catStrCopy: "Build strength step by step. No pressure, no intimidation — just workouts that grow with you.",
-    catMindCopy: "Who said fitness has to be boring? With workouts that feel more like play, you'll actually look forward to it.",
-    lifeKicker: "This is more than a workout. It's a lifestyle.",
-    lifeQ: "Are you ready?",
-    lifeCta: "Own Your Strength",
-    trustedA: "Trusted by the ", trustedB: "Hustle Community",
-    trustedSub: "Starting out is hard enough — that's why we keep every session personal, supportive, and built to help you feel confident.",
-    stats: [
-      { tag: "since 2017", big: "8+ YEARS", text: "helping people train smarter, safer, and stronger." },
-      { tag: "Proven impact", big: "1000+ SUCCESS STORIES", text: "across the Emirates — and counting." },
-      { tag: "Top-rated", big: "4.9/5 RATING", text: "from clients who trust our coaching team." },
-      { tag: "Built in-house", big: "OUR OWN FITNESS TECH", text: "we track, guide, and optimize every step of your journey." },
-    ],
-    tagline: "No shortcuts. Just hustle.",
-    toastErr: "Please fill in your name, phone, and email.",
-    waMsg: (n: string) => `Hi Hustle Nation! I'm ${n || "interested"} and I'd like to start training.`,
-  },
-  ar: {
-    dir: "rtl" as "ltr" | "rtl",
-    langBtn: "EN",
-    h1a: "تدريب ", h1b: "يضرب بقوة", h1c: " ويدوم طويلاً.",
-    sub: "سواء كنت تريد أن تصبح أقوى، أو تبني قدرتك على التحمل، أو ببساطة تتحرك بهدف — هاسل نيشن معك في كل خطوة.",
-    firstName: "الاسم الأول", lastName: "اسم العائلة",
-    phone: "رقم الهاتف", email: "البريد الإلكتروني",
-    goal: "هدفك",
-    goals: ["إنقاص الوزن","كمال الأجسام","شدّ الجسم","القوة","إعادة تأهيل الإصابات","الصحة العامة","اليوغا","الملاكمة","فنون القتال المختلطة","كراف ماغا","ما قبل الولادة","ما بعد الولادة","البيلاتس","تدريب الأطفال","تأهيل بدني"],
-    start: "متى تودّ أن تبدأ؟",
-    starts: ["هذا الأسبوع","الأسبوع القادم","لست متأكداً بعد"],
-    speed: "ما السرعة التي تريد بها النتائج؟",
-    speeds: ["بأسرع وقت ممكن (٨–١٢ أسبوعاً)","تقدّم ثابت ومستدام","لا استعجال"],
-    cta: "ابدأ الآن — على حسابنا!",
-    catEnd: "التحمّل", catStr: "القوة", catMind: "العقلية",
-    catEndCopy: "لا نؤمن بالحلول السريعة. نؤمن ببناء عادات تُبقيك متحركاً، مفعماً بالطاقة، وجاهزاً لسنواتٍ قادمة.",
-    catStrCopy: "ابنِ قوتك خطوةً بخطوة. لا ضغط ولا رهبة — فقط تمارين تكبر معك.",
-    catMindCopy: "من قال إن اللياقة مملة؟ مع تمارين تشبه اللعب، ستنتظرها كل يوم بشوق.",
-    lifeKicker: "هذه ليست مجرد تمارين، بل أسلوب حياة.",
-    lifeQ: "هل أنت مستعد؟",
-    lifeCta: "امتلك قوتك",
-    trustedA: "ثقة ", trustedB: "مجتمع هاسل",
-    trustedSub: "البداية صعبة بطبيعتها — لذلك نجعل كل جلسة شخصيةً وداعمة، مصممةً لتمنحك الثقة.",
-    stats: [
-      { tag: "منذ ٢٠١٧", big: "أكثر من ٨ سنوات", text: "نساعد الناس على التدرّب بذكاء وأمان وقوة." },
-      { tag: "أثرٌ ملموس", big: "أكثر من ١٠٠٠ قصة نجاح", text: "في أنحاء الإمارات — والعدد في ازدياد." },
-      { tag: "الأعلى تقييماً", big: "٤٫٩ / ٥", text: "من عملاء يثقون بفريق تدريبنا." },
-      { tag: "صناعة داخلية", big: "تقنيتنا الخاصة للياقة", text: "نتابع ونوجّه ونطوّر كل خطوة في رحلتك." },
-    ],
-    tagline: "لا اختصارات. فقط اجتهاد.",
-    toastErr: "يرجى إدخال الاسم ورقم الهاتف والبريد الإلكتروني.",
-    waMsg: (n: string) => `مرحباً هاسل نيشن! أنا ${n || "مهتم"} وأرغب في بدء التدريب.`,
-  },
+const t = {
+  h1a: "Train that ", h1b: "hits hard", h1c: " and lasts.",
+  sub: "Whether you want to get stronger, build endurance, or just move with intent — Hustle Nation has you covered.",
+  firstName: "First name", lastName: "Last name",
+  phone: "Phone number", email: "Email",
+  goal: "Your Goal",
+  goals: ["Weight Loss","Bodybuilding","Tone","Strength","Injury Rehab","General Health","Yoga","Boxing","MMA","Krav Maga","Prenatal","Postnatal","Pilates","Kids PT","Body Conditioning"],
+  start: "When would you like to start?",
+  starts: ["This Week","Next Week","Not Sure Yet"],
+  speed: "How quickly do you want results?",
+  speeds: ["As fast as possible (8–12 weeks)","Steady and sustainable","No rush"],
+  cta: "Start Now — It's on us!",
+  catEnd: "ENDURANCE", catStr: "STRENGTH", catMind: "MINDSET",
+  catEndCopy: "It's not about quick fixes. It's about building habits that keep you moving, energized, and ready for years to come.",
+  catStrCopy: "Build strength step by step. No pressure, no intimidation — just workouts that grow with you.",
+  catMindCopy: "Who said fitness has to be boring? With workouts that feel more like play, you'll actually look forward to it.",
+  lifeKicker: "This is more than a workout. It's a lifestyle.",
+  lifeQ: "Are you ready?",
+  lifeCta: "Own Your Strength",
+  trustedA: "Trusted by the ", trustedB: "Hustle Community",
+  trustedSub: "Starting out is hard enough — that's why we keep every session personal, supportive, and built to help you feel confident.",
+  stats: [
+    { tag: "since 2017", big: "8+ YEARS", text: "helping people train smarter, safer, and stronger." },
+    { tag: "Proven impact", big: "1000+ SUCCESS STORIES", text: "across the Emirates — and counting." },
+    { tag: "Top-rated", big: "4.9/5 RATING", text: "from clients who trust our coaching team." },
+    { tag: "Built in-house", big: "OUR OWN FITNESS TECH", text: "we track, guide, and optimize every step of your journey." },
+  ],
+  tagline: "No shortcuts. Just hustle.",
+  toastErr: "Please fill in your name, phone, and email.",
+  waMsg: (n: string) => `Hi Hustle Nation! I'm ${n || "interested"} and I'd like to start training.`,
 };
 
 function waLink(msg: string) {
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
 
-function StartNowPage() {
-  const [lang, setLang] = useState<Lang>("en");
-  const t = T[lang];
+// Meta Pixel — fires Lead event before sending the user to WhatsApp
+function trackLead(extra?: Record<string, unknown>) {
+  if (typeof window === "undefined") return;
+  const w = window as unknown as { fbq?: (...args: unknown[]) => void };
+  try {
+    w.fbq?.("track", "Lead", extra);
+  } catch {
+    /* ignore */
+  }
+}
 
+function openWhatsApp(msg: string, extra?: Record<string, unknown>) {
+  trackLead(extra);
+  window.open(waLink(msg), "_blank", "noopener,noreferrer");
+}
+
+function StartNowPage() {
   return (
-    <div dir={t.dir} className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       <Toaster theme="dark" position="top-center" richColors />
-      <Header t={t} onToggleLang={() => setLang(lang === "en" ? "ar" : "en")} />
-      <Hero t={t} />
-      <Categories t={t} />
-      <Lifestyle t={t} />
-      <Trusted t={t} />
-      <footer className="border-t border-white/5 py-6 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Hustle Nation. {lang === "ar" ? "جميع الحقوق محفوظة." : "All rights reserved."}
-      </footer>
+      <Header />
+      <Hero />
+      <Categories />
+      <Lifestyle />
+      <Trusted />
+      <Footer />
     </div>
   );
 }
 
-function Header({ t, onToggleLang }: { t: typeof T["en"] | typeof T["ar"]; onToggleLang: () => void }) {
+function Header() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-10">
         <a href={HOME_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
           <img src={logo} alt="Hustle Nation" width={48} height={48} className="h-12 w-12 rounded-md object-cover" />
           <span className="font-display text-2xl tracking-wide text-foreground">
-            HUSTLE <span className="text-primary">NATION</span>
+            HUSTLE<span className="text-primary">NATION</span>
           </span>
         </a>
-        <button
-          onClick={onToggleLang}
-          className="rounded-full border border-white/15 px-4 py-1.5 text-sm text-muted-foreground transition hover:border-primary hover:text-primary"
+        <a
+          href={HOME_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-1.5 text-sm text-muted-foreground transition hover:border-primary hover:text-primary"
         >
-          {t.langBtn}
-        </button>
+          <HomeIcon className="h-4 w-4" /> Home
+        </a>
       </div>
     </header>
   );
 }
 
-function Hero({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
+function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-5 py-12 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-20">
@@ -151,7 +128,7 @@ function Hero({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
             <span className="text-foreground">{t.h1c}</span>
           </h1>
           <p className="mt-5 max-w-lg text-base text-muted-foreground sm:text-lg">{t.sub}</p>
-          <LeadForm t={t} />
+          <LeadForm />
         </div>
 
         <div className="relative">
@@ -170,7 +147,7 @@ function Hero({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
   );
 }
 
-function LeadForm({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
+function LeadForm() {
   const [form, setForm] = useState({
     firstName: "", lastName: "", country: "+971", phone: "", email: "",
     goal: "", start: "", speed: "",
@@ -193,11 +170,14 @@ function LeadForm({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
       form.start && `${t.start} ${form.start}`,
       form.speed && `${t.speed} ${form.speed}`,
     ].filter(Boolean).join("\n");
-    window.open(waLink(lines), "_blank", "noopener,noreferrer");
+    openWhatsApp(lines, { source: "lead_form", goal: form.goal });
   };
 
   const inputCls = "h-12 w-full rounded-md border border-primary/40 bg-transparent px-4 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30";
+  // Native <option> uses OS palette; force readable colors with inline style on each option.
   const selectCls = inputCls + " appearance-none pr-10";
+  const optStyle = { backgroundColor: "#3a3a3a", color: "#ffffff" } as const;
+  const placeholderOptStyle = { backgroundColor: "#1f1f1f", color: "#9ca3af" } as const;
 
   return (
     <form onSubmit={onSubmit} className="mt-8 space-y-3">
@@ -209,13 +189,11 @@ function LeadForm({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
       <div className="grid grid-cols-[110px_1fr] gap-3 sm:grid-cols-[110px_1fr_1fr]">
         <div className="relative">
           <select className={selectCls} value={form.country} onChange={set("country")}>
-            <option value="+971">+971</option>
-            <option value="+966">+966</option>
-            <option value="+20">+20</option>
-            <option value="+44">+44</option>
-            <option value="+1">+1</option>
+            {["+971","+966","+20","+44","+1"].map(c => (
+              <option key={c} value={c} style={optStyle}>{c}</option>
+            ))}
           </select>
-          <ChevronDown className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
+          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
         </div>
         <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={set("phone")} />
         <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={t.email} type="email" value={form.email} onChange={set("email")} />
@@ -228,10 +206,12 @@ function LeadForm({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
       ].map(({ k, label, options }) => (
         <div key={k} className="relative">
           <select className={selectCls} value={form[k]} onChange={set(k)}>
-            <option value="" disabled>{label}</option>
-            {options.map(o => <option key={o} value={o}>{o}</option>)}
+            <option value="" disabled style={placeholderOptStyle}>{label}</option>
+            {options.map(o => (
+              <option key={o} value={o} style={optStyle}>{o}</option>
+            ))}
           </select>
-          <ChevronDown className="pointer-events-none absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
+          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
         </div>
       ))}
 
@@ -246,7 +226,7 @@ function LeadForm({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
   );
 }
 
-function Categories({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
+function Categories() {
   const cats = [
     { label: t.catEnd, img: catEndurance, copy: t.catEndCopy },
     { label: t.catStr, img: catStrength, copy: t.catStrCopy },
@@ -270,25 +250,24 @@ function Categories({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
   );
 }
 
-function Lifestyle({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
+function Lifestyle() {
   return (
     <section className="relative overflow-hidden border-y border-white/5 bg-gradient-to-b from-background via-brand-brown/15 to-background py-20 text-center">
       <p className="font-display text-2xl text-primary tracking-wider">{t.lifeKicker}</p>
       <p className="mt-2 font-display text-4xl text-foreground sm:text-5xl">{t.lifeQ}</p>
-      <a
-        href={waLink(t.waMsg(""))}
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
+        type="button"
+        onClick={() => openWhatsApp(t.waMsg(""), { source: "lifestyle_cta" })}
         className="mt-8 inline-flex h-12 items-center gap-2 rounded-md bg-primary px-8 font-display text-lg tracking-wide text-primary-foreground transition hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/30"
       >
         {t.lifeCta}
         <Dumbbell className="h-5 w-5" />
-      </a>
+      </button>
     </section>
   );
 }
 
-function Trusted({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
+function Trusted() {
   const icons = [Flame, Dumbbell, Star, Zap];
   return (
     <section className="mx-auto max-w-7xl px-5 py-20 text-center lg:px-10">
@@ -313,5 +292,66 @@ function Trusted({ t }: { t: typeof T["en"] | typeof T["ar"] }) {
         })}
       </div>
     </section>
+  );
+}
+
+function Footer() {
+  const socialBtn = "inline-flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground transition hover:bg-primary-hover";
+  return (
+    <footer className="border-t border-white/5 bg-background">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-5 py-16 lg:grid-cols-[1.3fr_1fr_1fr] lg:px-10">
+        {/* Brand */}
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+          <a href={HOME_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
+            <img src={logo} alt="Hustle Nation" width={56} height={56} className="h-14 w-14 rounded-md object-cover" />
+            <span className="font-display text-4xl tracking-wide sm:text-5xl">
+              HUSTLE<span className="text-primary">NATION</span>
+            </span>
+          </a>
+          <div className="mt-6 flex gap-3">
+            <a aria-label="Instagram" href="#" className={socialBtn}><Instagram className="h-5 w-5" /></a>
+            <a aria-label="Facebook" href="#" className={socialBtn}><Facebook className="h-5 w-5" /></a>
+            <a aria-label="X / Twitter" href="#" className={socialBtn}><Twitter className="h-5 w-5" /></a>
+          </div>
+        </div>
+
+        {/* Get in Touch */}
+        <div>
+          <h3 className="font-display text-2xl tracking-wide text-foreground">Get in Touch</h3>
+          <div className="mt-5 space-y-3 text-sm">
+            <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-3 text-muted-foreground transition hover:text-primary">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+                <Mail className="h-4 w-4" />
+              </span>
+              {CONTACT_EMAIL}
+            </a>
+            <button
+              type="button"
+              onClick={() => openWhatsApp(t.waMsg(""), { source: "footer_whatsapp" })}
+              className="flex items-center gap-3 text-muted-foreground transition hover:text-primary"
+            >
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+                <MessageCircle className="h-4 w-4" />
+              </span>
+              +971 50 815 2780
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Links */}
+        <div>
+          <h3 className="font-display text-2xl tracking-wide text-foreground">Quick Links</h3>
+          <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
+            <li><a href={`${HOME_URL}/terms`} target="_blank" rel="noopener noreferrer" className="transition hover:text-primary">Terms of use</a></li>
+            <li><a href={`${HOME_URL}/privacy`} target="_blank" rel="noopener noreferrer" className="transition hover:text-primary">Privacy policy</a></li>
+            <li><a href={HOME_URL} target="_blank" rel="noopener noreferrer" className="transition hover:text-primary">Home</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="border-t border-white/5 py-5 text-center text-xs text-muted-foreground">
+        © {new Date().getFullYear()} Hustle Nation. All rights reserved.
+      </div>
+    </footer>
   );
 }
