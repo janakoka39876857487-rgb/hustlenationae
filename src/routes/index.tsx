@@ -87,7 +87,7 @@ function openWhatsApp(msg: string, extra?: Record<string, unknown>) {
 
 function StartNowPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen text-foreground">
       <Toaster theme="dark" position="top-center" richColors />
       <Header />
       <Hero />
