@@ -195,14 +195,14 @@ function LeadForm() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.firstName || !form.phone || !form.email) {
+    if (!form.fullName || !form.phone) {
       toast.error(t.toastErr);
       return;
     }
     const lines = [
-      t.waMsg(`${form.firstName} ${form.lastName}`.trim()),
+      t.waMsg(form.fullName.trim()),
       `${t.phone}: ${form.country} ${form.phone}`,
-      `${t.email}: ${form.email}`,
+      form.email && `${t.email}: ${form.email}`,
       form.goal && `${t.goal} ${form.goal}`,
       form.start && `${t.start} ${form.start}`,
       form.speed && `${t.speed} ${form.speed}`,
@@ -211,11 +211,11 @@ function LeadForm() {
     // Save lead to dashboard before redirecting to WhatsApp (don't block on errors)
     try {
       await supabase.from("leads").insert({
-        first_name: form.firstName,
-        last_name: form.lastName || null,
+        first_name: form.fullName,
+        last_name: null,
         country_code: form.country,
         phone: form.phone,
-        email: form.email,
+        email: form.email || null,
         goal: form.goal || null,
         start_time: form.start || null,
         speed: form.speed || null,
