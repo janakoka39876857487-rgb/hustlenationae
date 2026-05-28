@@ -24,9 +24,9 @@ const HOME_URL = "https://www.hustlenationae.com";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Start Now — Hustle Nation" },
-      { name: "description", content: "Train that hits hard and lasts. Join Hustle Nation — personal training that builds strength, endurance, and mindset." },
-      { property: "og:title", content: "Start Now — Hustle Nation" },
+      { title: "Start Now Hustle Nation" },
+      { name: "description", content: "Train that hits hard and lasts. Join Hustle Nation personal training that builds strength, endurance, and mindset." },
+      { property: "og:title", content: "Start Now Hustle Nation" },
       { property: "og:description", content: "Train that hits hard and lasts. Join Hustle Nation." },
       { property: "og:type", content: "website" },
     ],
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/")({
 
 const t = {
   h1a: "Train that ", h1b: "hits hard", h1c: " and lasts.",
-  sub: "Whether you want to get stronger, build endurance, or just move with intent — Hustle Nation has you covered.",
+  sub: "Whether you want to get stronger, build endurance, or just move with intent Hustle Nation has you covered.",
   firstName: "First name", lastName: "Last name",
   phone: "Phone number", email: "Email",
   goal: "Your Goal",
@@ -45,19 +45,19 @@ const t = {
   starts: ["This Week","Next Week","Not Sure Yet"],
   speed: "How quickly do you want results?",
   speeds: ["As fast as possible (8–12 weeks)","Steady and sustainable","No rush"],
-  cta: "Start Now — It's on us!",
+  cta: "Start Now It's on us!",
   catEnd: "ENDURANCE", catStr: "STRENGTH", catMind: "MINDSET",
   catEndCopy: "It's not about quick fixes. It's about building habits that keep you moving, energized, and ready for years to come.",
-  catStrCopy: "Build strength step by step. No pressure, no intimidation — just workouts that grow with you.",
+  catStrCopy: "Build strength step by step. No pressure, no intimidation just workouts that grow with you.",
   catMindCopy: "Who said fitness has to be boring? With workouts that feel more like play, you'll actually look forward to it.",
   lifeKicker: "This is more than a workout. It's a lifestyle.",
   lifeQ: "Are you ready?",
   lifeCta: "Own Your Strength",
   trustedA: "Trusted by the ", trustedB: "Hustle Community",
-  trustedSub: "Starting out is hard enough — that's why we keep every session personal, supportive, and built to help you feel confident.",
+  trustedSub: "Starting out is hard enough that's why we keep every session personal, supportive, and built to help you feel confident.",
   stats: [
     { tag: "since 2017", big: "8+ YEARS", text: "helping people train smarter, safer, and stronger." },
-    { tag: "Proven impact", big: "1000+ SUCCESS STORIES", text: "across the Emirates — and counting." },
+    { tag: "Proven impact", big: "1000+ SUCCESS STORIES", text: "across the Emirates and counting." },
     { tag: "Top-rated", big: "4.9/5 RATING", text: "from clients who trust our coaching team." },
     { tag: "Built in-house", big: "OUR OWN FITNESS TECH", text: "we track, guide, and optimize every step of your journey." },
   ],
@@ -70,7 +70,7 @@ function waLink(msg: string) {
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
 
-// Meta Pixel — fires Lead event before sending the user to WhatsApp
+// Meta Pixel fires Lead event before sending the user to WhatsApp
 function trackLead(extra?: Record<string, unknown>) {
   if (typeof window === "undefined") return;
   const w = window as unknown as { fbq?: (...args: unknown[]) => void };
