@@ -170,7 +170,7 @@ function LeadForm() {
       t.waMsg(`${form.firstName} ${form.lastName}`.trim()),
       `${t.phone}: ${form.country} ${form.phone}`,
       `${t.email}: ${form.email}`,
-      form.goal && `${t.goal}: ${form.goal}`,
+      form.goal && `${t.goal} ${form.goal}`,
       form.start && `${t.start} ${form.start}`,
       form.speed && `${t.speed} ${form.speed}`,
     ].filter(Boolean).join("\n");
