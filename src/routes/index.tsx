@@ -37,7 +37,7 @@ export const Route = createFileRoute("/")({
 
 const t = {
   h1a: "Train that ", h1b: "hits hard", h1c: " and lasts.",
-  sub: "Whether you want to get stronger, build endurance, or just move with intent Hustle Nation has you covered.",
+  sub: "Whether you want to get stronger, build endurance, or just move with intent, Hustle Nation has you covered.",
   firstName: "First name", lastName: "Last name",
   phone: "Phone number", email: "Email",
   goal: "What is your main goal?",
