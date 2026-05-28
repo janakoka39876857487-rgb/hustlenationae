@@ -84,6 +84,11 @@ function trackLead(extra?: Record<string, unknown>) {
 
 function openWhatsApp(msg: string, extra?: Record<string, unknown>) {
   trackLead(extra);
+  const source = (extra?.source as string) || "whatsapp_tap";
+  // Log non-form taps too so the dashboard records every WhatsApp click
+  if (source !== "lead_form") {
+    supabase.from("leads").insert({ source }).then(() => {}, () => {});
+  }
   window.open(waLink(msg), "_blank", "noopener,noreferrer");
 }
 
