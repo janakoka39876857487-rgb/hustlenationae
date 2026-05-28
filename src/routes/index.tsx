@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import {
   ChevronDown, Dumbbell, Flame, Star, Zap,
@@ -151,11 +151,44 @@ function Hero() {
   );
 }
 
+// Map ISO country code -> dial code for the dropdown
+const COUNTRY_DIAL: Record<string, string> = {
+  AE: "+971", SA: "+966", EG: "+20", GB: "+44", US: "+1", KW: "+965", QA: "+974",
+  BH: "+973", OM: "+968", JO: "+962", LB: "+961", MA: "+212", DZ: "+213", TN: "+216",
+  IQ: "+964", SY: "+963", YE: "+967", LY: "+218", SD: "+249", PS: "+970", TR: "+90",
+  DE: "+49", FR: "+33", IT: "+39", ES: "+34", NL: "+31", BE: "+32", SE: "+46",
+  CH: "+41", AT: "+43", IE: "+353", PT: "+351", PL: "+48", RU: "+7", UA: "+380",
+  CA: "+1", AU: "+61", NZ: "+64", IN: "+91", PK: "+92", BD: "+880", LK: "+94",
+  CN: "+86", JP: "+81", KR: "+82", SG: "+65", MY: "+60", ID: "+62", PH: "+63",
+  TH: "+66", VN: "+84", ZA: "+27", NG: "+234", KE: "+254", ET: "+251", BR: "+55",
+  MX: "+52", AR: "+54",
+};
+
 function LeadForm() {
   const [form, setForm] = useState({
     firstName: "", lastName: "", country: "+971", phone: "", email: "",
     goal: "", start: "", speed: "",
   });
+
+  // Auto-detect country dial code from visitor IP location
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        if (!res.ok) return;
+        const data = await res.json();
+        const dial = COUNTRY_DIAL[(data?.country_code || "").toUpperCase()];
+        if (dial && !cancelled) {
+          setForm(f => ({ ...f, country: dial }));
+        }
+      } catch {
+        /* ignore — keep default */
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm({ ...form, [k]: e.target.value });
@@ -202,24 +235,27 @@ function LeadForm() {
   const placeholderOptStyle = { backgroundColor: "#1f1f1f", color: "#9ca3af" } as const;
 
   return (
-    <form onSubmit={onSubmit} className="mt-8 space-y-3">
+    <form onSubmit={onSubmit} className="mt-8 space-y-3" autoComplete="off">
+      {/* Honeypot to discourage browser autofill heuristics */}
+      <input type="text" name="prevent_autofill" autoComplete="off" tabIndex={-1} aria-hidden="true" className="hidden" />
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <input className={inputCls} placeholder={t.firstName} value={form.firstName} onChange={set("firstName")} />
-        <input className={inputCls} placeholder={t.lastName} value={form.lastName} onChange={set("lastName")} />
+        <input className={inputCls} placeholder={t.firstName} value={form.firstName} onChange={set("firstName")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-first-name" />
+        <input className={inputCls} placeholder={t.lastName} value={form.lastName} onChange={set("lastName")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-last-name" />
       </div>
 
       <div className="grid grid-cols-[110px_1fr] gap-3 sm:grid-cols-[110px_1fr_1fr]">
         <div className="relative">
-          <select className={selectCls} value={form.country} onChange={set("country")}>
-            {["+971","+966","+20","+44","+1"].map(c => (
+          <select className={selectCls} value={form.country} onChange={set("country")} autoComplete="off" name="hn-country">
+            {Array.from(new Set([form.country, ...Object.values(COUNTRY_DIAL)])).map(c => (
               <option key={c} value={c} style={optStyle}>{c}</option>
             ))}
           </select>
           <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
         </div>
-        <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={set("phone")} />
-        <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={t.email} type="email" value={form.email} onChange={set("email")} />
+        <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={set("phone")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-phone" inputMode="tel" />
+        <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={t.email} type="email" value={form.email} onChange={set("email")} autoComplete="off" autoCorrect="off" spellCheck={false} name="hn-email" />
       </div>
+
 
       {[
         { k: "goal" as const, label: t.goal, options: t.goals },
