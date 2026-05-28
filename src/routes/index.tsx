@@ -210,6 +210,11 @@ function LeadForm() {
       toast.error(t.toastErr);
       return;
     }
+    const expected = PHONE_MAX[form.country];
+    if (expected && form.phone.length !== expected) {
+      toast.error(`Phone number for ${form.country} must be exactly ${expected} digits.`);
+      return;
+    }
     const lines = [
       t.waMsg(form.fullName.trim()),
       `${t.phone}: ${form.country} ${form.phone}`,
