@@ -38,7 +38,7 @@ export const Route = createFileRoute("/")({
 const t = {
   h1a: "Train that ", h1b: "hits hard", h1c: " and lasts.",
   sub: "Whether you want to get stronger, build endurance, or just move with intent, Hustle Nation has you covered.",
-  firstName: "First name", lastName: "Last name",
+  fullName: "Full name",
   phone: "Phone number", email: "Email",
   goal: "What is your main goal?",
   goals: ["Lose Fat & Get Lean","Build Muscle & Strength","Improve Fitness & Energy","Full Body Transformation"],
@@ -63,7 +63,7 @@ const t = {
     { tag: "Built in-house", big: "OUR OWN FITNESS TECH", text: "we track, guide, and optimize every step of your journey." },
   ],
   tagline: "No shortcuts. Just hustle.",
-  toastErr: "Please fill in your name, phone, and email.",
+  toastErr: "Please fill in your name and phone number.",
   waMsg: (n: string) => `Hi Hustle Nation! I'm ${n || "interested"} and I'd like to start training.`,
 };
 
@@ -166,7 +166,7 @@ const COUNTRY_DIAL: Record<string, string> = {
 
 function LeadForm() {
   const [form, setForm] = useState({
-    firstName: "", lastName: "", country: "+971", phone: "", email: "",
+    fullName: "", country: "+971", phone: "", email: "",
     goal: "", start: "", speed: "",
   });
 
@@ -195,14 +195,14 @@ function LeadForm() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.firstName || !form.phone || !form.email) {
+    if (!form.fullName || !form.phone) {
       toast.error(t.toastErr);
       return;
     }
     const lines = [
-      t.waMsg(`${form.firstName} ${form.lastName}`.trim()),
+      t.waMsg(form.fullName.trim()),
       `${t.phone}: ${form.country} ${form.phone}`,
-      `${t.email}: ${form.email}`,
+      form.email && `${t.email}: ${form.email}`,
       form.goal && `${t.goal} ${form.goal}`,
       form.start && `${t.start} ${form.start}`,
       form.speed && `${t.speed} ${form.speed}`,
@@ -211,11 +211,11 @@ function LeadForm() {
     // Save lead to dashboard before redirecting to WhatsApp (don't block on errors)
     try {
       await supabase.from("leads").insert({
-        first_name: form.firstName,
-        last_name: form.lastName || null,
+        first_name: form.fullName,
+        last_name: null,
         country_code: form.country,
         phone: form.phone,
-        email: form.email,
+        email: form.email || null,
         goal: form.goal || null,
         start_time: form.start || null,
         speed: form.speed || null,
@@ -258,9 +258,8 @@ function LeadForm() {
         <input type="email" tabIndex={-1} autoComplete="email" name="email" />
         <input type="tel" tabIndex={-1} autoComplete="tel" name="tel" />
       </div>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <input className={inputCls} placeholder={t.firstName} value={form.firstName} onChange={set("firstName")} {...noFill} name={`fn_${nonce}`} />
-        <input className={inputCls} placeholder={t.lastName} value={form.lastName} onChange={set("lastName")} {...noFill} name={`ln_${nonce}`} />
+      <div className="grid grid-cols-1 gap-3">
+        <input className={inputCls} placeholder={t.fullName} value={form.fullName} onChange={set("fullName")} {...noFill} name={`fn_${nonce}`} />
       </div>
 
       <div className="grid grid-cols-[110px_1fr] gap-3 sm:grid-cols-[110px_1fr_1fr]">
@@ -273,7 +272,7 @@ function LeadForm() {
           <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
         </div>
         <input className={inputCls} placeholder={t.phone} value={form.phone} onChange={set("phone")} {...noFill} name={`ph_${nonce}`} inputMode="tel" type="text" />
-        <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={t.email} type="text" value={form.email} onChange={set("email")} {...noFill} name={`em_${nonce}`} inputMode="email" />
+        <input className={inputCls + " col-span-2 sm:col-span-1"} placeholder={`${t.email} (optional)`} type="text" value={form.email} onChange={set("email")} {...noFill} name={`em_${nonce}`} inputMode="email" />
       </div>
 
 
