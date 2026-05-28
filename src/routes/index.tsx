@@ -295,7 +295,7 @@ function Trusted() {
 function Footer() {
   const socialBtn = "inline-flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground transition hover:bg-primary-hover";
   return (
-    <footer className="border-t border-white/5 bg-background">
+    <footer className="border-t border-white/5">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-5 py-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr] lg:gap-12 lg:px-10">
         {/* Brand */}
         <div className="flex flex-col items-center text-center sm:col-span-2 lg:col-span-1 lg:items-start lg:text-left">
