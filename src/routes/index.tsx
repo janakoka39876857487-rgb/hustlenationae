@@ -125,7 +125,7 @@ function Header() {
 function Hero() {
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-5 py-12 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-20">
+      <div id="lead-form" className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-5 py-12 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-20">
         <div className="flex flex-col justify-center">
           <h1 className="font-display text-5xl leading-[0.95] sm:text-6xl lg:text-7xl">
             {t.h1a}<span className="text-primary">{t.h1b}</span><br />
@@ -359,7 +359,7 @@ function Lifestyle() {
       <p className="mt-2 font-display text-4xl text-foreground sm:text-5xl">{t.lifeQ}</p>
       <button
         type="button"
-        onClick={() => openWhatsApp(t.waMsg(""), { source: "lifestyle_cta" })}
+        onClick={() => document.getElementById("lead-form")?.scrollIntoView({ behavior: "smooth", block: "start" })}
         className="mt-8 inline-flex h-12 items-center gap-2 rounded-md bg-primary px-8 font-display text-lg tracking-wide text-primary-foreground transition hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/30"
       >
         {t.lifeCta}
