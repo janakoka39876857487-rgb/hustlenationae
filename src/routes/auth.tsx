@@ -4,13 +4,12 @@ import { toast, Toaster } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/auth")({
-  head: () => ({ meta: [{ title: "Admin Login — Hustle Nation" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Admin Login Hustle Nation" }, { name: "robots", content: "noindex" }] }),
   component: AuthPage,
 });
 
 function AuthPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,19 +28,8 @@ function AuthPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: `${window.location.origin}/admin` },
-        });
-        if (error) throw error;
-        toast.success("Account created. You can sign in now.");
-        setMode("login");
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Authentication failed");
     } finally {
@@ -59,9 +47,7 @@ function AuthPage() {
           <h1 className="font-display text-3xl tracking-wide">
             HUSTLE<span className="text-primary">NATION</span>
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {mode === "login" ? "Admin sign in" : "Create admin account"}
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">Admin sign in</p>
         </div>
         <input className={input} type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <input className={input} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
@@ -70,14 +56,7 @@ function AuthPage() {
           disabled={loading}
           className="inline-flex h-12 w-full items-center justify-center rounded-md bg-primary font-display text-lg tracking-wide text-primary-foreground transition hover:bg-primary-hover disabled:opacity-60"
         >
-          {loading ? "..." : mode === "login" ? "Sign in" : "Sign up"}
-        </button>
-        <button
-          type="button"
-          onClick={() => setMode(mode === "login" ? "signup" : "login")}
-          className="block w-full text-center text-xs text-muted-foreground hover:text-primary"
-        >
-          {mode === "login" ? "Need an account? Sign up" : "Already have an account? Sign in"}
+          {loading ? "..." : "Sign in"}
         </button>
       </form>
     </div>
