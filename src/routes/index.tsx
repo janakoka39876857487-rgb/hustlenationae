@@ -55,7 +55,7 @@ const t = {
   lifeQ: "Are you ready?",
   lifeCta: "Own Your Strength",
   trustedA: "Trusted by the ", trustedB: "Hustle Community",
-  trustedSub: "Starting out is hard enough that's why we keep every session personal, supportive, and built to help you feel confident.",
+  trustedSub: "Starting out is hard enough, that's why we keep every session personal, supportive, and built to help you feel confident.",
   stats: [
     { tag: "since 2017", big: "8+ YEARS", text: "helping people train smarter, safer, and stronger." },
     { tag: "Proven impact", big: "1000+ SUCCESS STORIES", text: "across the Emirates and counting." },
