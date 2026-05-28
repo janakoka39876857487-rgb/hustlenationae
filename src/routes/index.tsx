@@ -101,7 +101,7 @@ function StartNowPage() {
 
 function Header() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-background/60 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-10">
         <a href={HOME_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
           <img src={logo} alt="Hustle Nation" width={48} height={48} className="h-12 w-12 rounded-md object-cover" />
@@ -109,18 +109,11 @@ function Header() {
             HUSTLE<span className="text-primary">NATION</span>
           </span>
         </a>
-        <a
-          href={HOME_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-1.5 text-sm text-muted-foreground transition hover:border-primary hover:text-primary"
-        >
-          <HomeIcon className="h-4 w-4" /> Home
-        </a>
       </div>
     </header>
   );
 }
+
 
 function Hero() {
   return (
