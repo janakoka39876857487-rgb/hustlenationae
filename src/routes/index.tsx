@@ -303,26 +303,26 @@ function Footer() {
   const socialBtn = "inline-flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground transition hover:bg-primary-hover";
   return (
     <footer className="border-t border-white/5 bg-background">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-5 py-16 lg:grid-cols-[1.3fr_1fr_1fr] lg:px-10">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-5 py-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr] lg:gap-12 lg:px-10">
         {/* Brand */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+        <div className="flex flex-col items-center text-center sm:col-span-2 lg:col-span-1 lg:items-start lg:text-left">
           <a href={HOME_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
             <img src={logo} alt="Hustle Nation" width={56} height={56} className="h-14 w-14 rounded-md object-cover" />
             <span className="font-display text-4xl tracking-wide sm:text-5xl">
               HUSTLE<span className="text-primary">NATION</span>
             </span>
           </a>
-          <div className="mt-6 flex gap-3">
-            <a aria-label="Instagram" href="#" className={socialBtn}><Instagram className="h-5 w-5" /></a>
-            <a aria-label="Facebook" href="#" className={socialBtn}><Facebook className="h-5 w-5" /></a>
-            <a aria-label="X / Twitter" href="#" className={socialBtn}><Twitter className="h-5 w-5" /></a>
+          <div className="mt-5 flex gap-3">
+            <a aria-label="Instagram" href={SOCIAL_INSTAGRAM} target="_blank" rel="noopener noreferrer" className={socialBtn}><Instagram className="h-5 w-5" /></a>
+            <a aria-label="LinkedIn" href={SOCIAL_LINKEDIN} target="_blank" rel="noopener noreferrer" className={socialBtn}><Linkedin className="h-5 w-5" /></a>
+            <a aria-label="X / Twitter" href={SOCIAL_X} target="_blank" rel="noopener noreferrer" className={socialBtn}><Twitter className="h-5 w-5" /></a>
           </div>
         </div>
 
         {/* Get in Touch */}
         <div>
           <h3 className="font-display text-2xl tracking-wide text-foreground">Get in Touch</h3>
-          <div className="mt-5 space-y-3 text-sm">
+          <div className="mt-4 space-y-2 text-sm">
             <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-3 text-muted-foreground transition hover:text-primary">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
                 <Mail className="h-4 w-4" />
@@ -345,15 +345,14 @@ function Footer() {
         {/* Quick Links */}
         <div>
           <h3 className="font-display text-2xl tracking-wide text-foreground">Quick Links</h3>
-          <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
+          <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
             <li><a href={`${HOME_URL}/terms`} target="_blank" rel="noopener noreferrer" className="transition hover:text-primary">Terms of use</a></li>
             <li><a href={`${HOME_URL}/privacy`} target="_blank" rel="noopener noreferrer" className="transition hover:text-primary">Privacy policy</a></li>
-            <li><a href={HOME_URL} target="_blank" rel="noopener noreferrer" className="transition hover:text-primary">Home</a></li>
           </ul>
         </div>
       </div>
 
-      <div className="border-t border-white/5 py-5 text-center text-xs text-muted-foreground">
+      <div className="border-t border-white/5 py-4 text-center text-xs text-muted-foreground">
         © {new Date().getFullYear()} Hustle Nation. All rights reserved.
       </div>
     </footer>
