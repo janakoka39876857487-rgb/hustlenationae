@@ -215,6 +215,11 @@ function LeadForm() {
       toast.error(`Phone number for ${form.country} must be exactly ${expected} digits.`);
       return;
     }
+    if (!form.goal || !form.start || !form.speed) {
+      toast.error("Please answer all the questions before continuing.");
+      return;
+    }
+
     const lines = [
       t.waMsg(form.fullName.trim()),
       `${t.phone}: ${form.country} ${form.phone}`,
