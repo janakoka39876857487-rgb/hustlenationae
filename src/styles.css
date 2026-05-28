@@ -77,15 +77,16 @@
     -webkit-font-smoothing: antialiased;
   }
   body {
-    background-color: #0d0d0d;
+    background-color: #000000;
     background-image:
-      radial-gradient(at 18% 12%, oklch(0.32 0.14 42 / 0.45) 0px, transparent 55%),
-      radial-gradient(at 82% 8%, oklch(0.28 0.10 30 / 0.40) 0px, transparent 55%),
-      radial-gradient(at 50% 95%, oklch(0.30 0.12 38 / 0.40) 0px, transparent 60%),
-      radial-gradient(at 90% 60%, oklch(0.22 0.08 28 / 0.50) 0px, transparent 55%);
-    background-size: 200% 200%;
+      radial-gradient(at 20% 15%, #1a1a1a 0px, transparent 55%),
+      radial-gradient(at 80% 10%, #141414 0px, transparent 55%),
+      radial-gradient(at 50% 90%, #1f1f1f 0px, transparent 60%),
+      radial-gradient(at 10% 80%, #0f0f0f 0px, transparent 55%),
+      radial-gradient(at 90% 60%, #181818 0px, transparent 55%);
+    background-size: 220% 220%;
     background-attachment: fixed;
-    animation: bgShift 22s ease-in-out infinite alternate;
+    animation: bgWave 24s ease-in-out infinite alternate;
   }
   h1, h2, h3, .font-display {
     font-family: var(--font-display);
@@ -93,13 +94,16 @@
   }
 }
 
-@keyframes bgShift {
-  0%   { background-position: 0% 0%, 100% 0%, 50% 100%, 100% 50%; }
-  50%  { background-position: 10% 20%, 80% 15%, 55% 85%, 85% 60%; }
-  100% { background-position: 20% 10%, 90% 25%, 45% 90%, 95% 45%; }
+@keyframes bgWave {
+  0%   { background-position: 0% 0%, 100% 0%, 50% 100%, 0% 100%, 100% 50%; }
+  25%  { background-position: 15% 25%, 85% 20%, 55% 80%, 10% 85%, 90% 55%; }
+  50%  { background-position: 30% 10%, 70% 35%, 60% 90%, 20% 70%, 80% 65%; }
+  75%  { background-position: 20% 30%, 90% 15%, 45% 75%, 5% 90%, 95% 45%; }
+  100% { background-position: 35% 20%, 75% 30%, 50% 85%, 15% 80%, 85% 60%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   body { animation: none; }
 }
+
 
