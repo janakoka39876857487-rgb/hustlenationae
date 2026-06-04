@@ -1,39 +1,58 @@
+# خطة حل مشكلة الكوستم دومين `hustlenationae.online`
 
-## الهدف
-أي شخص يضغط "Start Now" أو أي زر واتساب، بياناته تتخزن أوتوماتيك في قاعدة البيانات قبل ما يتحول لواتساب، وتبقى متاحة في داشبورد أدمن محمي بتسجيل دخول.
+## التشخيص
+- المشروع شغال تمام على:
+  - `https://hustlenationae.lovable.app` ✅
+  - `https://id-preview--ef909252-...lovable.app` ✅
+- المشكلة `ERR_CONNECTION_TIMED_OUT` بتيجي من إن الدومين `hustlenationae.online` مش بيوصل لسيرفرات Lovable
+- السبب: إعدادات DNS عند مزود الدومين (مش في كود المشروع)
 
 ## الخطوات
 
-### 1. قاعدة البيانات (Lovable Cloud)
-- إنشاء جدول `leads` يحتوي على: `id`, `first_name`, `last_name`, `country_code`, `phone`, `email`, `goal`, `start_time`, `speed`, `source` (lead_form / lifestyle_cta / footer_whatsapp), `created_at`
-- تفعيل RLS:
-  - `INSERT` مسموح لأي شخص (anon + authenticated) عشان النموذج يشتغل من غير تسجيل دخول
-  - `SELECT` مسموح فقط لمستخدم عنده دور `admin`
-- جدول منفصل `user_roles` + enum `app_role` + دالة `has_role` (الطريقة الآمنة لمنع privilege escalation)
+### 1. مراجعة حالة الدومين داخل Lovable
+- فتح **Project Settings → Domains**
+- مشاهدة حالة الدومين (Active / Offline / Verifying / Failed)
+- لو الحالة **Offline** أو **Failed** → نعمل Retry أو نشيل الدومين ونعيد ربطه
 
-### 2. حفظ الليد قبل الواتساب
-- تعديل `LeadForm.onSubmit` و `openWhatsApp` بحيث:
-  1. يحفظ الليد في `leads` عبر Supabase client
-  2. بعدها يفتح واتساب (حتى لو الحفظ فشل، الواتساب يفتح عادي وميتعطلش المستخدم)
-- لأزرار "Own Your Strength" و "WhatsApp في الفوتر" اللي مفيش فيها نموذج: يتخزن سطر بـ `source` بس من غير بيانات عميل (أو ممكن نتجاهلهم — انت تختار، الافتراضي: نسجلهم كـ tap events بدون PII)
+### 2. مراجعة DNS Records عند مزود الدومين
+لازم تكون موجودة بالظبط:
 
-### 3. تسجيل دخول الأدمن
-- صفحة `/auth` فيها تسجيل دخول بالإيميل/باسورد (Supabase Auth)
-- بعد التسجيل، أول مستخدم لازم يتعطى دور `admin` يدويًا من Lovable Cloud (تعليمات هتظهرلك)
-- إعداد session listener عشان يفضل مسجل دخول
+```text
+Type  | Name     | Value
+------+----------+------------------
+A     | @        | 185.158.133.1
+A     | www      | 185.158.133.1
+TXT   | _lovable | (القيمة من Lovable)
+```
 
-### 4. داشبورد الأدمن `/admin`
-- محمية: لو مش مسجل دخول → redirect لـ `/auth`. لو مسجل بس مش admin → رسالة "Access denied"
-- جدول بيعرض كل الليدز: التاريخ، الاسم، التليفون، الإيميل، الهدف، التوقيت، السرعة، المصدر
-- بحث + فلترة بالتاريخ والمصدر
-- زر **Export CSV** يصدر كل الليدز (أو الفلترة الحالية)
-- زر **WhatsApp** جنب كل ليد يفتح محادثة معاه مباشرة
+- مسح أي `A` records قديمة بتشاور على IP تاني
+- مسح أي `CNAME` متعارض على `@` أو `www`
 
-### 5. الحفاظ على باقي الموقع
-- مفيش أي تغيير في الديزاين أو الكلام
-- الزرار وتجربة المستخدم تفضل زي ما هي بالظبط
+### 3. التعامل مع Cloudflare (لو مستخدم)
+- لو الدومين على Cloudflare: تطفية الـ Proxy (السحابة رمادية مش برتقالية = DNS only)
+- **أو** تفعيل خيار **"Domain uses Cloudflare or a similar proxy"** من **Connect Domain → Advanced** في Lovable عشان يستخدم CNAME بدل A records
 
-## ملاحظات تقنية
-- استخدام `@/integrations/supabase/client` المُولّد تلقائيا من Lovable Cloud
-- الـ INSERT بيتم client-side لأن الـ RLS هتسمح بـ insert فقط (مش read) للعموم
-- صفحات `/auth` و `/admin` كملفات routes جديدة في `src/routes/`
+### 4. إعادة ربط الدومين لو لزم الأمر
+لو الإعدادات كلها سليمة والمشكلة مستمرة:
+1. حذف الدومين من **Project Settings → Domains**
+2. إعادة إضافته من جديد عبر **Connect Domain**
+3. اتباع التعليمات الجديدة من Lovable
+
+### 5. التحقق والانتظار
+- استخدام [DNSChecker.org](https://dnschecker.org) للتأكد إن الـ `A` records وصلت لكل العالم
+- الانتظار من 15 دقيقة لحد 72 ساعة لانتشار DNS بالكامل
+- بعد التحقق، Lovable هتعمل SSL تلقائيًا
+
+### 6. تأكيد العمل
+- فتح `https://hustlenationae.online` و `https://www.hustlenationae.online`
+- التأكد إن الموقع بيفتح بـ HTTPS من غير تحذيرات
+
+## ملاحظات
+- **مفيش أي تعديل في كود المشروع مطلوب** — الكود سليم والـ published URL شغال
+- لو الدومين متشتري من Lovable نفسه: ممكن إدارة الـ DNS من **⋯ → Configure → Manage DNS records** مباشرة من داخل Lovable
+- لو متشتري من بره (GoDaddy / Namecheap / إلخ): لازم تعديل الإعدادات من لوحة تحكم مزود الدومين
+
+## لو احتجت مساعدة إضافية
+ابعتلي screenshot من:
+1. صفحة Domains في Lovable (حالة الدومين)
+2. صفحة DNS عند مزود الدومين
